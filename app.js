@@ -1,6 +1,7 @@
 "use strict";
 
 const allHorns = [];
+var uniqueNames = [];
 
 function Horn (hornObject) {
     this.image_url = hornObject.image_url;
@@ -11,6 +12,17 @@ function Horn (hornObject) {
 
     allHorns.push(this);
 }
+
+// function clickHandler () {
+//     $('select').click(function (event) {
+//         let menuChildren = $('select').children();
+//         allHorns.forEach(function(animal) {
+//             if(event.text !== animal.keyword){
+//                 animal.attr('hidden');
+//             }
+//         })
+//     })
+// }
 
 Horn.prototype.render = function(){
     $('main').append('<div class = "newAnimal"></div>');
@@ -32,11 +44,27 @@ const readJSON = function(){
     $.get('./page-1.json', data => {
       data.forEach(animal => {
   
-        new Horn(animal);
-  
-      })
-    }).then(renderAllHorns);
+          new Horn(animal);
 
+      })
+    //   filterAllHorns();
+      findUnique();
+      filter();
+    //   clickHandler();
+    }).then(renderAllHorns);
+    
+
+}
+
+function filter() {
+    uniqueNames.forEach(value =>{
+    $('select').append('<option class = newItem></option>');
+    let $newOption = $('option[class = "newItem"]');
+
+    $newOption.text(value);
+
+    $newOption.attr('class', '');
+})
 }
 
 function renderAllHorns () {
@@ -45,5 +73,21 @@ function renderAllHorns () {
     })
 }
 
-// console.log(allHorns);
+// function filterAllHorns(){
+//     allHorns.forEach(animal => {
+//         animal.filter();
+//     })
+// }
+
+function findUnique(){
+    console.log('we mad it in to the function')
+    console.log(allHorns.length);
+    for(let i = 0; i < allHorns.length; i++){
+        console.log('we made it into the for loop')
+        if (!uniqueNames.includes (allHorns[i].keyword)){
+            uniqueNames.push(allHorns[i].keyword);
+        } 
+    }
+    console.log('these are the ', uniqueNames);
+}
 readJSON();
