@@ -14,15 +14,15 @@ function Horn (hornObject) {
 
 Horn.prototype.render = function(){
     $('main').append('<div class = "newAnimal"></div>');
-    let $hornContainer = $('div[class = "clone"]');
+    let $hornContainer = $('div[class = "newAnimal"]');
     console.log($hornContainer);
 
     let $templateHTML = $('#photo-template').html();
-    console.log($templateHTML);
+    // console.log($templateHTML);
     $hornContainer.html($templateHTML);
 
     $hornContainer.find('h2').text(this.title);
-    $hornContainer.find('img').attr('src',this.image_url);
+    $hornContainer.find('img').attr('src', this.image_url);
     $hornContainer.find('p').text(this.description);
 
     $hornContainer.attr('class', '');
@@ -35,8 +35,15 @@ const readJSON = function(){
         new Horn(animal);
   
       })
-    })//.then(render)
+    }).then(renderAllHorns);
 
 }
-console.log(allHorns);
+
+function renderAllHorns () {
+    allHorns.forEach(animal => {
+      animal.render();
+    })
+}
+
+// console.log(allHorns);
 readJSON();
