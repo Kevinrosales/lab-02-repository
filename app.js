@@ -26,13 +26,13 @@ Horn.prototype.render = function(){
   $hornContainer.find('img').attr('src', this.image_url);
   $hornContainer.find('img').attr('alt', this.keyword);
   $hornContainer.find('p').text(this.description);
-  
+
 
   $hornContainer.attr('class', '');
 }
 
-const readJSON = function(){
-  $.get('./page-1.json', data => {
+const readJSON = function(JSONData){
+  $.get(JSONData, data => {
     data.forEach(animal => {
 
       new Horn(animal);
@@ -82,4 +82,12 @@ $('select').change(function() {
   $(`img:not([alt=${$keyWord}])`).parent('div').hide();
 });
 
-readJSON();
+$('nav').on('click', 'button', function() {
+  $(`div`).hide();
+  const json1 = './page-1.json'
+  const json2 = './page-2.json';
+  (this.value === 'page1') ? readJSON(json1) : readJSON(json2);
+  console.log(this.value);
+});
+
+readJSON('./page-1.json');
