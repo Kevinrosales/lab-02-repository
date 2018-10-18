@@ -26,6 +26,11 @@ img {
   width: 150px;
 }
 
+p {
+  font-family: Mali, sans-serif;
+  font-size: smaller;
+}
+
 footer {
   clear: both;
 }
