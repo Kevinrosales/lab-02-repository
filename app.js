@@ -2,6 +2,7 @@
 
 const allHorns = [];
 const uniqueNames = [];
+const uniqueHorns = [];
 
 function Horn (hornObject) {
   this.image_url = hornObject.image_url;
@@ -50,8 +51,10 @@ const readJSON = function(){
 
       })
       //   filterAllHorns();
-      findUnique();
-      filter();
+      findUniqueKeyword();
+      findUniqueHorns();
+      filter(uniqueNames, "#keyword");
+      filter(uniqueHorns, "#horns");
       //   clickHandler();
     }).then(renderAllHorns);
   } else if (top.location.pathname === '/gallery-page2.html'){
@@ -62,17 +65,19 @@ const readJSON = function(){
 
       })
       //   filterAllHorns();
-      findUnique();
-      filter();
+      findUniqueKeyword();
+      findUniqueHorns();
+      filter(uniqueNames, "#keyword");
+      filter(uniqueHorns, "#horns");
     //   clickHandler();
     }).then(renderAllHorns);
   }
 
 }
 
-function filter() {
-  uniqueNames.forEach(value =>{
-    $('select').append('<option class = newItem></option>');
+function filter(array, id) {
+  array.forEach(value =>{
+    $(id).append('<option class = newItem></option>');
     let $newOption = $('option[class = "newItem"]');
 
     $newOption.text(value);
@@ -87,22 +92,36 @@ function renderAllHorns () {
   })
 }
 
-function findUnique(){
+function findUniqueKeyword(){
   console.log('we mad it in to the function')
   console.log(allHorns.length);
   for(let i = 0; i < allHorns.length; i++){
     console.log('we made it into the for loop')
-    if (!uniqueNames.includes (allHorns[i].keyword)){
+    if (!uniqueNames.includes(allHorns[i].keyword)){
       uniqueNames.push(allHorns[i].keyword);
     }
   }
   console.log('these are the ', uniqueNames);
 }
 
+function findUniqueHorns(){
+  console.log('we mad it in to the horns function')
+  console.log(allHorns.length);
+  for(let i = 0; i < allHorns.length; i++){
+    console.log('we made it into the horns for loop')
+    if (!uniqueHorns.includes(allHorns[i].horns)){
+      uniqueHorns.push(allHorns[i].horns);
+    }
+  }
+  console.log('these are the ', uniqueHorns);
+}
+
 $('select').change(function() {
   let $keyWord = $('select option:selected').text();
+  let $horns = $('select option:selected').text()
   // selecting all images that do not have that keyword
   $(`img:not([alt=${$keyWord}])`).parent('div').hide();
+  $(`img:not([data-horns=${$horns}])`).parent('div').hide();
 });
 
 // $('nav').on('click', 'button', function() {
