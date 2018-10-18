@@ -14,21 +14,29 @@ function Horn (hornObject) {
 }
 
 Horn.prototype.render = function(){
-  $('main').append('<div class = "newAnimal"></div>');
-  let $hornContainer = $('div[class = "newAnimal"]');
-  console.log($hornContainer);
+  let photoSource = $('#photo-handlebars').html();
+  let photoTemplate = Handlebars.compile(photoSource);
+  let photoHTML = photoTemplate(this);
 
-  let $templateHTML = $('#photo-template').html();
-  // console.log($templateHTML);
-  $hornContainer.html($templateHTML);
+  $('main').append(photoHTML);
+  $(`p`).hide();
+  // $('main').append('<div class = "newAnimal"></div>');
+  // let $hornContainer = $('div[class = "newAnimal"]');
+  // console.log($hornContainer);
 
-  $hornContainer.find('h2').text(this.title);
-  $hornContainer.find('img').attr('src', this.image_url);
-  $hornContainer.find('img').attr('alt', this.keyword);
-  $hornContainer.find('p').text(this.description);
+  // let $templateHTML = $('#photo-template').html();
+  // // console.log($templateHTML);
+  // $hornContainer.html($templateHTML);
+
+  // $hornContainer.find('h2').text(this.title);
+  // $hornContainer.find('img').attr('src', this.image_url);
+  // $hornContainer.find('img').attr('alt', this.keyword);
+  // $hornContainer.find('p').text(this.description);
 
 
-  $hornContainer.attr('class', '');
+  // $hornContainer.attr('class', '');
+
+
 }
 
 const readJSON = function(){
