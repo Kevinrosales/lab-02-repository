@@ -31,19 +31,34 @@ Horn.prototype.render = function(){
   $hornContainer.attr('class', '');
 }
 
-const readJSON = function(JSONData){
-  $.get(JSONData, data => {
-    data.forEach(animal => {
+const readJSON = function(){
+  const json1 = './page-1.json'
+  const json2 = './page-2.json';
+  if(top.location.pathname === '/index.html'){
+    $.get(json1, data => {
+      data.forEach(animal => {
 
-      new Horn(animal);
+        new Horn(animal);
 
-    })
-    //   filterAllHorns();
-    findUnique();
-    filter();
+      })
+      //   filterAllHorns();
+      findUnique();
+      filter();
+      //   clickHandler();
+    }).then(renderAllHorns);
+  } else if (top.location.pathname === '/gallery-page2.html'){
+    $.get(json2, data => {
+      data.forEach(animal => {
+
+        new Horn(animal);
+
+      })
+      //   filterAllHorns();
+      findUnique();
+      filter();
     //   clickHandler();
-  }).then(renderAllHorns);
-
+    }).then(renderAllHorns);
+  }
 
 }
 
@@ -82,12 +97,12 @@ $('select').change(function() {
   $(`img:not([alt=${$keyWord}])`).parent('div').hide();
 });
 
-$('nav').on('click', 'button', function() {
-  $(`div`).hide();
-  const json1 = './page-1.json'
-  const json2 = './page-2.json';
-  (this.value === 'page1') ? readJSON(json1) : readJSON(json2);
-  console.log(this.value);
-});
+// $('nav').on('click', 'button', function() {
+//   $(`div`).hide();
+//   const json1 = './page-1.json'
+//   const json2 = './page-2.json';
+//   (this.value === 'page1') ? readJSON(json1) : readJSON(json2);
+//   console.log(this.value);
+// });
 
-readJSON('./page-1.json');
+readJSON();
